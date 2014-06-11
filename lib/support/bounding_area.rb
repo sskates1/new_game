@@ -1,4 +1,5 @@
 class BoundingArea
+  attr_accessor :box_list
 
   def initialize(box_list)
     @box_list = box_list
