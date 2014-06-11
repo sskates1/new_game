@@ -1,8 +1,9 @@
 class Level
+  attr_reader :ground, :tile
   def initialize(window)
     @window = window
+    @tile = Gosu::Image.new(@window,"media/tile.png", true)
     @ground = make_ground(20)
-    @tile = Gosu::Image.new(@window,"lib/tile.png", true)
   end
 
   def make_ground(length)
@@ -14,6 +15,7 @@ class Level
       ground << Ground.new(@window, x, y, 75, 50 )
       x += @tile.width
     end
+    return ground
   end
 
 end

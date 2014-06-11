@@ -6,4 +6,8 @@ class Ground
     @y = y
     @hit_box = BoundingBox.new(x,y,width,hight)
   end
+
+  def draw(tiles)
+    tiles.draw(@x, @y, 1)
+  end
 end
