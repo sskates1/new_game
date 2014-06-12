@@ -32,13 +32,9 @@ class Game <Gosu::Window
     end
 
     if button_down?(Gosu::KbLeft)
-      @player.move_left(@tower.board, @tower.offset)
-      @movement += 1
+      @player.move_left()
     elsif button_down?(Gosu::KbRight)
-      @player.move_right(@tower.board, @tower.offset)
-      @movement += 1
-    else
-      @movement = 0
+      @player.move_right()
     end
 
     # if button_down?(Gosu::KbSpace)
