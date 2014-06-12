@@ -6,7 +6,7 @@ class Player
 	  @face_right = Gosu::Image.new(@window, "media/tifa_stand_right.png", true)
     @face_left = Gosu::Image.new(@window, "media/tifa_stand.png", true)
     @stand = Gosu::Image.new(@window, "media/tifa_stand.png", true)
-    @walkleft = []
+    @walk = []
     8.times do |i|
       @walkleft << Gosu::Image.new(@window, "media/tifa_walk/tifa_#{i+1}.png", true)
     end
@@ -19,11 +19,11 @@ class Player
   end
 
   def move_left
-
+    direction = -1
   end
 
   def move_right
-
+    direction = 1
   end
 
   def jump
