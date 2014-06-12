@@ -10,9 +10,9 @@ class Level
     ground = []
     #x = start location for each item
     x = 0
-    y = 0
-    17.times do
-      ground << Ground.new(@window, x, y, 75, 50 )
+    y = 672
+    15.times do #66 64
+      ground << Ground.new(@window, x, y, @tile.width, @tile.height )
       x += @tile.width
     end
     return ground
