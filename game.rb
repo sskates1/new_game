@@ -15,6 +15,7 @@ class Game <Gosu::Window
     super(SCREEN_WIDTH, SCREEN_HEIGHT, false)
 
     @level = Level.new(self)
+    @player = Player.new(self, 250,250)
     #@background = Gosu::Image.new(self, "tiles/bg2.png", true)
 
     @testing = true
@@ -26,16 +27,18 @@ class Game <Gosu::Window
 
   def draw
     #draw_rect(0, 0, screen_width, screen_height, Gosu::Color::BLACK)
-    @level.ground.each do |peice|
+    @player.draw
+    @level.draw
+    ground.each do |peice|
       peice.draw(@level.tile )
       #binding.pry
       if @testing
-        draw_rect(peice.x, peice.y, peice.width, peice.height, 0xff0000ff)
+        draw_rect(peice.x, peice.y, peice.width, peice.height)
       end
     end
   end
 
-  def draw_rect(x, y, width, height, color, z = 10)
+  def draw_rect(x, y, width, height, color = 0xff0000ff, z = 10)
     #binding.pry
     #left side
     draw_line(x,y,color,x, y+height, color, z)

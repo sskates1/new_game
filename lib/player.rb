@@ -1,12 +1,20 @@
 class Player
-	def initialize()
+  attr_accessor :hit_box, :x, :y
+  attr_reader :width, :height
+	def initialize(window, x, y)
+    @window = window
 	  @face_right = Gosu::Image.new(@window, "media/tifa_stand_right.png", true)
     @face_left = Gosu::Image.new(@window, "media/tifa_stand.png", true)
     @stand = Gosu::Image.new(@window, "media/tifa_stand.png", true)
     @walkleft = []
     8.times do |i|
-      @walk << Gosu::Image.new(@window, "media/tifa_walk/tifa_#{i+1}.png", true)
+      @walkleft << Gosu::Image.new(@window, "media/tifa_walk/tifa_#{i+1}.png", true)
     end
+    @x = x
+    @y = y
+    @width = 29
+    @height = 62
+    @hit_box = BoundingBox.new(@x,@y, @width,@height)
     @direction = :stand
   end
 
@@ -28,14 +36,15 @@ class Player
 
   def draw
   	if @direction == :stand
-  		@stand.draw
+  		@stand.draw(@x, @y,1)
   	elsif @direction == :left
   		num = ((movement - 1) / 3)
-      @walk[num].draw(x, y)
+      @walkleft[num].draw(@x, @y,1)
     elsif @direction == :face_right
     	num = ((movement - 1) / 3)
-    	@walk[num].draw_rot(x, y, center_x = 0.5, center_y = 0.5, factor_x = 1)
+    	@walkleft[num].draw_rot(@x, @y, center_x = 0.5, center_y = 0.5, factor_x = 1)
     end
+    @window.draw_rect(@x,@y,@width, @height)
   end
 end
 
