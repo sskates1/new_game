@@ -48,13 +48,15 @@ class Player
   end
 
   def jump
-    #(@hit_box.top <= peice.hit_box.bottom && @hit_box.top >= peice.hit_box.top )
+    @y_vel += -4
+    @y = @y+@y_vel
+    @hit_box.y = @y
   end
 
   def on_ground()
     #check to see if you colide with ground
     #binding.pry
-    on_something = false
+    @in_air = true
     @window.level.ground.each do |peice|
       #check to see if they are coliding in the y direction
       if (((@hit_box.bottom >= peice.hit_box.top && @hit_box.bottom <= peice.hit_box.bottom )||
@@ -65,23 +67,22 @@ class Player
         (@hit_box.right > peice.hit_box.left && @hit_box.right < peice.hit_box.right)
         ))
         @y_vel = 0
-        @on_something = true
+        @in_air = false
         @y = peice.hit_box.top - @height
         @hit_box.y = peice.hit_box.top - @height
       end
     end
 
     #if player is on something change in air state
-    if on_something
-      @in_air = false
-    else
-      @in_air = true
-    end
+    # if on_something
+    #   @in_air = false
+    # else
+    #   @in_air = true
+    # end
 
 
     #falling down
     if @in_air
-
       #acceleration and terminal velocity
       if @y_vel >= 6
         @y_vel = 6
@@ -104,7 +105,13 @@ class Player
       self.move_right()
     end
 
-    on_ground
+    self.on_ground()
+    if window.button_down?(Gosu::KbSpace)
+      if !@in_air
+        self.jump()
+        @in_air = true
+      end
+    end
 
     # if button_down?(Gosu::KbSpace)
     #   if state == :running
