@@ -58,28 +58,13 @@ class Player
     #binding.pry
     @in_air = true
     @window.level.ground.each do |peice|
-      #check to see if they are coliding in the y direction
-      if (((@hit_box.bottom >= peice.hit_box.top && @hit_box.bottom <= peice.hit_box.bottom )||
-        (@hit_box.top <= peice.hit_box.bottom && @hit_box.top >= peice.hit_box.top )
-        ) &&
-        #check to make sure they are over said block
-        ((@hit_box.left < peice.hit_box.right && @hit_box.left > peice.hit_box.left) ||
-        (@hit_box.right > peice.hit_box.left && @hit_box.right < peice.hit_box.right)
-        ))
+      if collide?(peice)
         @y_vel = 0
         @in_air = false
         @y = peice.hit_box.top - @height
         @hit_box.y = peice.hit_box.top - @height
       end
     end
-
-    #if player is on something change in air state
-    # if on_something
-    #   @in_air = false
-    # else
-    #   @in_air = true
-    # end
-
 
     #falling down
     if @in_air
@@ -97,6 +82,21 @@ class Player
     end
   end
 
+  def collide?(peice)
+    #check to see if they are coliding in the y direction
+    if (((@hit_box.bottom >= peice.hit_box.top && @hit_box.bottom <= peice.hit_box.bottom )||
+        (@hit_box.top <= peice.hit_box.bottom && @hit_box.top >= peice.hit_box.top )
+        ) &&
+        #check to make sure they are over said block
+        ((@hit_box.left < peice.hit_box.right && @hit_box.left > peice.hit_box.left) ||
+        (@hit_box.right > peice.hit_box.left && @hit_box.right < peice.hit_box.right)
+        ))
+      return true
+    else
+      return false
+    end
+  end
+
   def update(window)
 
     if window.button_down?(Gosu::KbLeft)
@@ -106,6 +106,7 @@ class Player
     end
 
     self.on_ground()
+
     if window.button_down?(Gosu::KbSpace)
       if !@in_air
         self.jump()
