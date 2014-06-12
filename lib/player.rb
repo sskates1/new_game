@@ -44,7 +44,9 @@ class Player
     	num = ((movement - 1) / 3)
     	@walkleft[num].draw_rot(@x, @y, center_x = 0.5, center_y = 0.5, factor_x = 1)
     end
-    @window.draw_rect(@x,@y,@width, @height)
+    if @window.testing
+      @window.draw_rect(@x,@y,@width, @height)
+    end
   end
 end
 

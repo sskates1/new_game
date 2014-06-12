@@ -6,6 +6,8 @@ require_relative 'lib/terain/Ground'
 require_relative 'lib/support/bounding_box'
 
 class Game <Gosu::Window
+  attr_accessor :testing
+
   SCREEN_WIDTH = 1024
   SCREEN_HEIGHT = 768
 
@@ -22,20 +24,17 @@ class Game <Gosu::Window
   end
 
   def update
-
+    if button_down?(Gosu::KbT) && @testing
+      @testing = false
+    elsif button_down?(Gosu::KbT)&& !@testing
+      @testing = true
+    end
   end
 
   def draw
     #draw_rect(0, 0, screen_width, screen_height, Gosu::Color::BLACK)
     @player.draw
     @level.draw
-    ground.each do |peice|
-      peice.draw(@level.tile )
-      #binding.pry
-      if @testing
-        draw_rect(peice.x, peice.y, peice.width, peice.height)
-      end
-    end
   end
 
   def draw_rect(x, y, width, height, color = 0xff0000ff, z = 10)
