@@ -6,7 +6,7 @@ require_relative 'lib/terain/Ground'
 require_relative 'lib/support/bounding_box'
 
 class Game <Gosu::Window
-  attr_accessor :testing
+  attr_accessor :testing, :gravity, :level
 
   SCREEN_WIDTH = 1024
   SCREEN_HEIGHT = 768
@@ -21,37 +21,34 @@ class Game <Gosu::Window
     #@background = Gosu::Image.new(self, "tiles/bg2.png", true)
 
     @testing = true
+    @gravity = 0.1
   end
 
   def update
 
-    if button_down?(Gosu::KbT) && @testing
-      @testing = false
-    elsif button_down?(Gosu::KbT)&& !@testing
-      @testing = true
-    end
-
-    if button_down?(Gosu::KbLeft)
-      @player.move_left()
-    elsif button_down?(Gosu::KbRight)
-      @player.move_right()
-    end
-
-    # if button_down?(Gosu::KbSpace)
-    #   if state == :running
-    #     @player.jump(@tower.speed)
-    #   end
+    # if button_down?(Gosu::KbT) && @testing
+    #   @testing = false
+    # elsif button_down?(Gosu::KbT)&& !@testing
+    #   @testing = true
     # end
 
     if button_down?(Gosu::KbEscape)
       close
     end
+    @player.update(self)
+
   end
 
   def draw
     #draw_rect(0, 0, screen_width, screen_height, Gosu::Color::BLACK)
     @player.draw
     @level.draw
+  end
+
+  def button_down(id)
+    if id == (Gosu::KbT)
+      @testing == true ? @testing = false : @testing = true
+    end
   end
 
   def draw_rect(x, y, width, height, color = 0xff0000ff, z = 10)

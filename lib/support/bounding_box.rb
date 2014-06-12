@@ -18,11 +18,11 @@ class BoundingBox
   end
 
   def bottom
-    @y
+    @y+height
   end
 
   def top
-    @y+height
+    @y
   end
 
   def contains_point?(x,y)

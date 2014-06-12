@@ -1,5 +1,8 @@
+require 'gosu'
+require 'pry'
+
 class Player
-  attr_accessor :hit_box, :x, :y, :direction
+  attr_accessor :hit_box, :x, :y, :direction, :x_vel, :y_vel
   attr_reader :width, :height
 	def initialize(window, x, y)
     @window = window
@@ -17,6 +20,9 @@ class Player
     @hit_box = BoundingBox.new(@x,@y, @width,@height)
     @direction = :stand
     @movement = 0
+    @in_air = true
+    @y_vel = 0
+    @x_vel = 0
   end
 
   def move_left
@@ -32,7 +38,54 @@ class Player
   end
 
   def on_ground()
+    #check to see if you colide with ground
+    #binding.pry
+    @window.level.ground.each do |peice|
+      if (@hit_box.bottom >= peice.hit_box.top && @hit_box.bottom <= peice.hit_box.bottom ) ||
+        (@hit_box.top <= peice.hit_box.bottom && @hit_box.top >= peice.hit_box.top )
+        @y_vel = 0
+        @in_air = false
+        @y = peice.hit_box.top - @height
+        @hit_box.y = peice.hit_box.top - @height
 
+      #else
+        #@in_air = true
+      end
+    end
+
+
+    #falling down
+    if @in_air
+
+      #acceleration and terminal velocity
+      if @y_vel >= 6
+        @y_vel = 6
+      else
+        @y_vel = @y_vel+@window.gravity
+      end
+
+      #update position of character
+      @y = @y+@y_vel
+      @hit_box.y = @y
+    else #when on ground
+    end
+  end
+
+  def update(window)
+
+    if window.button_down?(Gosu::KbLeft)
+      self.move_left()
+    elsif window.button_down?(Gosu::KbRight)
+      self.move_right()
+    end
+
+    on_ground
+
+    # if button_down?(Gosu::KbSpace)
+    #   if state == :running
+    #     @player.jump(@tower.speed)
+    #   end
+    # end
   end
 
   def draw
@@ -45,8 +98,9 @@ class Player
     	num = ((@movement - 1) / 3)
       @walk[num].draw(@x+@width, @y, 1, -1,1)
     end
+
     if @window.testing
-      @window.draw_rect(@x,@y,@width, @height)
+      @window.draw_rect(@hit_box.x,@hit_box.y,@width, @height)
     end
   end
 end
