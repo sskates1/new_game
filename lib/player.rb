@@ -34,6 +34,8 @@ class Player
     end
     @x = @x+@x_vel
     @hit_box.x = @x
+    @move += 1
+    if @move > 34 then @move = 1 end
   end
 
   def move_right
@@ -45,6 +47,8 @@ class Player
     end
     @x = @x+@x_vel
     @hit_box.x = @x
+    @move += 1
+    if @move > 34 then @move = 1 end
   end
 
   def jump
@@ -120,14 +124,16 @@ class Player
     # end
   end
 
-  def draw()
+  def draw(move)
     #binding.pry
   	if @direction == :stand
   		@stand.draw(@x, @y, 1)
   	elsif @direction == :left
-      @walk[2].draw(@x, @y, 1)
+      frame = ((move - 1) / 3)
+      @walk[frame].draw(@x, @y, 1)
     elsif @direction == :right
-      @walk[2].draw(@x+@width, @y, 1, -1, 1)
+      frame = ((move - 1) / 3)
+      @walk[frame].draw(@x+@width, @y, 1, -1, 1)
     end
 
     if @window.testing
