@@ -11,14 +11,18 @@ class Level
     #x = start location for each item
     x = 0
     y = 672
-    15.times do #66 64
+    10.times do #66 64
       ground << Ground.new(@window, x, y, @tile.width, @tile.height )
       x += @tile.width
     end
+    x += @tile.width*3
+    ground << Ground.new(@window, x, y, @tile.width, @tile.height )
+
     return ground
   end
 
   def draw
+
     @ground.each do |peice|
       peice.draw(@tile )
       #binding.pry
