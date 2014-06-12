@@ -21,7 +21,28 @@ class Game <Gosu::Window
   end
 
   def update
+    if button_down?(Gosu::KbLeft)
+      @player.move_left(@tower.board, @tower.offset)
+      @movement += 1
+    elsif button_down?(Gosu::KbRight)
+      @player.move_right(@tower.board, @tower.offset)
+      @movement += 1
+    else
+      @movement = 0
+    end
 
+    # if button_down?(Gosu::KbSpace)
+    #   if state == :running
+    #     @player.jump(@tower.speed)
+    #   end
+    # end
+  end
+
+    if button_down?(Gosu::KbEscape)
+      close
+    end
+
+    player.draw
   end
 
   def draw

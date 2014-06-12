@@ -3,19 +3,20 @@ class Player
 	  @face_right = Gosu::Image.new(@window, "media/tifa_stand_right.png", true)
     @face_left = Gosu::Image.new(@window, "media/tifa_stand.png", true)
     @stand = Gosu::Image.new(@window, "media/tifa_stand.png", true)
-    @walkleft = []
+    @walk = []
     8.times do |i|
       @walk << Gosu::Image.new(@window, "media/tifa_walk/tifa_#{i+1}.png", true)
     end
-    @direction = :stand
+    @direction = 1
+    @falling = false
   end
 
   def move_left
-
+    direction = -1
   end
 
   def move_right
-
+    direction = 1
   end
 
   def jump
@@ -27,12 +28,12 @@ class Player
   end
 
   def draw
-  	if @direction == :stand
+  	if @direction == 1
   		@stand.draw
   	elsif @direction == :left
   		num = ((movement - 1) / 3)
       @walk[num].draw(x, y)
-    elsif @direction == :face_right
+    elsif @direction == :right
     	num = ((movement - 1) / 3)
     	@walk[num].draw_rot(x, y, center_x = 0.5, center_y = 0.5, factor_x = 1)
     end
