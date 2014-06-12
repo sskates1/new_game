@@ -113,15 +113,13 @@ class Player
     # end
   end
 
-  def draw
+  def draw(frame)
   	if @direction == :stand
-  		@stand.draw(@x, @y,1)
+  		@stand.draw(@x, @y)
   	elsif @direction == :left
-  		num = ((@movement - 1) / 3)
-      @walk[num].draw(@x, @y,1)
+      @walk[2].draw(@x, @y)
     elsif @direction == :right
-    	num = ((@movement - 1) / 3)
-      @walk[num].draw(@x+@width, @y, 1, -1,1)
+      @walk[2].draw(@x, @y)
     end
 
     if @window.testing
