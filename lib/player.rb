@@ -23,6 +23,7 @@ class Player
     @in_air = true
     @y_vel = 0
     @x_vel = 0
+    @move = 0
   end
 
   def move_left
@@ -34,6 +35,7 @@ class Player
     end
     @x = @x+@x_vel
     @hit_box.x = @x
+
     @move += 1
     if @move > 34 then @move = 1 end
   end
