@@ -9,6 +9,7 @@ class Player
 	  #@face_right = Gosu::Image.new(@window, "media/tifa_stand_right.png", true)
     #@face_left = Gosu::Image.new(@window, "media/tifa_stand.png", true)
     @stand = Gosu::Image.new(@window, "media/tifa_stand.png", true)
+    @jump = Gosu::Image.new(@window, "media/tifa_walk/tifa_3.png", true)
     @walk = []
     8.times do |i|
       @walk << Gosu::Image.new(@window, "media/tifa_walk/tifa_#{i+1}.png", true)
@@ -23,6 +24,7 @@ class Player
     @in_air = true
     @y_vel = 0
     @x_vel = 0
+    @move = 1
   end
 
   def move_left
@@ -34,8 +36,8 @@ class Player
     end
     @x = @x+@x_vel
     @hit_box.x = @x
-    @move += 1
-    if @move > 34 then @move = 1 end
+    @move += 0.2
+    if @move > 8 then @move = 1 end
   end
 
   def move_right
@@ -47,8 +49,8 @@ class Player
     end
     @x = @x+@x_vel
     @hit_box.x = @x
-    @move += 1
-    if @move > 34 then @move = 1 end
+    @move += 0.2
+    if @move > 8 then @move = 1 end
   end
 
   def jump
@@ -125,16 +127,22 @@ class Player
     # end
   end
 
-  def draw(move)
+  def draw
     #binding.pry
-  	if @direction == :stand
-  		@stand.draw(@x, @y, 1)
-  	elsif @direction == :left
-      frame = ((move - 1) / 3)
-      @walk[frame].draw(@x, @y, 1)
-    elsif @direction == :right
-      frame = ((move - 1) / 3)
-      @walk[frame].draw(@x+@width, @y, 1, -1, 1)
+    if @in_air == true && @direction == :left
+      @jump.draw(@x, @y, 1)
+    elsif @in_air == true && @direction == :right
+      @jump.draw(@x + @width, @y, 1, -1, 1)
+    else
+    	if @direction == :stand
+    		@stand.draw(@x, @y, 1)
+    	elsif @direction == :left
+        frame = ((@move - 1) / 1)
+        @walk[frame].draw(@x, @y, 1)
+      elsif @direction == :right
+        frame = ((@move - 1) / 1)
+        @walk[frame].draw(@x+@width, @y, 1, -1, 1)
+      end
     end
 
     if @window.testing

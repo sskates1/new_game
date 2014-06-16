@@ -22,7 +22,6 @@ class Game <Gosu::Window
 
     @testing = true
     @gravity = 0.1
-    @move = 0
   end
 
   def update
@@ -42,7 +41,7 @@ class Game <Gosu::Window
 
   def draw
     #draw_rect(0, 0, screen_width, screen_height, Gosu::Color::BLACK)
-    @player.draw(@move)
+    @player.draw
     @level.draw
   end
 
