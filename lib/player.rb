@@ -132,7 +132,7 @@ class Player
       end
     end
 
-    if window.button_down?(Gosu::KbSpace) == false
+    if window.button_down?(Gosu::KbSpace) == false && @double_jump == true
       if @in_air == true
         @second_jump = true
       end
