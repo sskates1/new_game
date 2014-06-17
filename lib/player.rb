@@ -24,11 +24,7 @@ class Player
     @in_air = true
     @y_vel = 0
     @x_vel = 0
-<<<<<<< HEAD
     @move = 1
-=======
-    @move = 0
->>>>>>> 31668d6bc78a8bd1195cb7f05d9d244d272c03d8
   end
 
   def move_left
@@ -40,14 +36,8 @@ class Player
     end
     @x = @x+@x_vel
     @hit_box.x = @x
-<<<<<<< HEAD
     @move += 0.2
     if @move > 8 then @move = 1 end
-=======
-
-    @move += 1
-    if @move > 34 then @move = 1 end
->>>>>>> 31668d6bc78a8bd1195cb7f05d9d244d272c03d8
   end
 
   def move_right
