@@ -25,6 +25,8 @@ class Player
     @y_vel = 0
     @x_vel = 0
     @move = 1
+    @double_jump = false
+    @second_jump = false
   end
 
   def move_left
@@ -54,19 +56,29 @@ class Player
   end
 
   def jump
-    @y_vel += -4
+      @y_vel += -4
+      @y = @y+@y_vel
+      @hit_box.y = @y
+      @double_jump = true
+  end
+
+  def double_jump
+    @y_vel += -2
     @y = @y+@y_vel
     @hit_box.y = @y
+    @double_jump = false
+    @second_jump = false
   end
 
   def on_ground()
     #check to see if you colide with ground
     #binding.pry
-    @in_air = true
     @window.level.ground.each do |peice|
       if collide?(peice)
         @y_vel = 0
         @in_air = false
+        @double_jump = false
+        @second_jump = false
         @y = peice.hit_box.top - @height
         @hit_box.y = peice.hit_box.top - @height
       end
@@ -115,8 +127,20 @@ class Player
 
     if window.button_down?(Gosu::KbSpace)
       if !@in_air
-        self.jump()
+        self.jump
         @in_air = true
+      end
+    end
+
+    if window.button_down?(Gosu::KbSpace) == false
+      if @in_air == true
+        @second_jump = true
+      end
+    end
+
+    if window.button_down?(Gosu::KbSpace)
+      if @second_jump == true
+        self.double_jump
       end
     end
 
