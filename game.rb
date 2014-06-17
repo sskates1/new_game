@@ -1,5 +1,5 @@
 require 'gosu'
-require 'pry'
+#require 'pry'
 require_relative 'lib/Player'
 require_relative 'levels/Level'
 require_relative 'lib/terain/Ground'
