@@ -6,8 +6,6 @@ class Player
   attr_reader :width, :height
 	def initialize(window, x, y)
     @window = window
-	  #@face_right = Gosu::Image.new(@window, "media/tifa_stand_right.png", true)
-    #@face_left = Gosu::Image.new(@window, "media/tifa_stand.png", true)
     @stand = Gosu::Image.new(@window, "media/tifa_stand.png", true)
     @jump = Gosu::Image.new(@window, "media/tifa_walk/tifa_3.png", true)
     @walk = []
@@ -71,8 +69,6 @@ class Player
   end
 
   def on_ground()
-    #check to see if you colide with ground
-    #binding.pry
     @window.level.ground.each do |peice|
       if collide?(peice)
         @y_vel = 0
@@ -84,31 +80,24 @@ class Player
       end
     end
 
-    #falling down
     if @in_air
-      #acceleration and terminal velocity
       if @y_vel >= 6
         @y_vel = 6
       else
         @y_vel = @y_vel+@window.gravity
       end
 
-      #update position of character
       @y = @y+@y_vel
       @hit_box.y = @y
-    else #when on ground
+    else
     end
   end
 
   def collide?(peice)
-    #check to see if they are coliding in the y direction
-    if (((@hit_box.bottom >= peice.hit_box.top && @hit_box.bottom <= peice.hit_box.bottom )||
-        (@hit_box.top <= peice.hit_box.bottom && @hit_box.top >= peice.hit_box.top )
-        ) &&
-        #check to make sure they are over said block
+    if (((@hit_box.bottom >= peice.hit_box.top && @hit_box.bottom <= peice.hit_box.bottom ) ||
+        (@hit_box.top <= peice.hit_box.bottom && @hit_box.top >= peice.hit_box.top )) &&
         ((@hit_box.left < peice.hit_box.right && @hit_box.left > peice.hit_box.left) ||
-        (@hit_box.right > peice.hit_box.left && @hit_box.right < peice.hit_box.right)
-        ))
+        (@hit_box.right > peice.hit_box.left && @hit_box.right < peice.hit_box.right)))
       return true
     else
       return false
@@ -143,16 +132,9 @@ class Player
         self.double_jump
       end
     end
-
-    # if button_down?(Gosu::KbSpace)
-    #   if state == :running
-    #     @player.jump(@tower.speed)
-    #   end
-    # end
   end
 
   def draw
-    #binding.pry
     if @in_air == true && @direction == :left
       @jump.draw(@x, @y, 1)
     elsif @in_air == true && @direction == :right
@@ -174,8 +156,3 @@ class Player
     end
   end
 end
-
-
-
-#draw(x, y, z, factor_x = 1, factor_y = 1, color = 0xffffffff, mode = :default)
-#draw_rot(x, y, z, angle, center_x = 0.5, center_y = 0.5, factor_x = 1, factor_y = 1, color = 0xffffffff, mode = :default)

@@ -1,5 +1,4 @@
 require 'gosu'
-#require 'pry'
 require_relative 'lib/Player'
 require_relative 'levels/Level'
 require_relative 'lib/terain/Ground'
@@ -25,13 +24,6 @@ class Game <Gosu::Window
   end
 
   def update
-
-    # if button_down?(Gosu::KbT) && @testing
-    #   @testing = false
-    # elsif button_down?(Gosu::KbT)&& !@testing
-    #   @testing = true
-    # end
-
     if button_down?(Gosu::KbEscape)
       close
     end
@@ -40,7 +32,6 @@ class Game <Gosu::Window
   end
 
   def draw
-    #draw_rect(0, 0, screen_width, screen_height, Gosu::Color::BLACK)
     @player.draw
     @level.draw
   end
