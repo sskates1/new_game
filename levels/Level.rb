@@ -25,7 +25,6 @@ class Level
 
     @ground.each do |peice|
       peice.draw(@tile )
-      #binding.pry
       if @window.testing
         @window.draw_rect(peice.x, peice.y, peice.width, peice.height)
       end
