@@ -8,18 +8,12 @@ require_relative 'lib/Background'
 class Game <Gosu::Window
   attr_accessor :testing, :gravity, :level
 
-  SCREEN_WIDTH = 1024
-  SCREEN_HEIGHT = 768
-
-
-
   def initialize
-    super(SCREEN_WIDTH, SCREEN_HEIGHT, false)
+    super(1024, 768, false)
 
     @level = Level.new(self)
     @player = Player.new(self, 250,250)
     #@background = Gosu::Image.new(self, "tiles/bg2.png", true)
-
     @testing = true
     @gravity = 0.1
   end
@@ -28,12 +22,9 @@ class Game <Gosu::Window
     if button_down?(Gosu::KbEscape)
       close
     end
+
     @player.update(self)
-    # if button_down?(Gosu::KbRight)
-    #   level.update(1)
-    # elsif button_down?(Gosu::KbLeft)
-    #   level.update(0)
-    # end
+
     if button_down?(Gosu::KbRight)
       level.update(1)
     elsif button_down?(Gosu::KbLeft)
