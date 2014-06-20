@@ -1,9 +1,11 @@
 require 'gosu'
 require_relative 'lib/Player'
-require_relative 'levels/twilight_skylight'
+require_relative 'lib/level'
 require_relative 'lib/terrain/Ground'
 require_relative 'lib/support/bounding_box'
 require_relative 'lib/Background'
+
+require_relative 'levels/level1'
 
 class Game <Gosu::Window
   attr_accessor :testing, :gravity, :level
@@ -16,7 +18,8 @@ class Game <Gosu::Window
   def initialize
     super(SCREEN_WIDTH, SCREEN_HEIGHT, false)
 
-    @level = Level.new(self)
+
+    @level = level1(self)
     @player = Player.new(self, 250,250)
     #@background = Gosu::Image.new(self, "tiles/bg2.png", true)
 
