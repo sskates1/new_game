@@ -1,9 +1,11 @@
 class Level
-  attr_reader :ground, :tile
+  attr_reader :ground, :tile, :bg
   def initialize(window)
     @window = window
-    @tile = Gosu::Image.new(@window,"media/tile.png", true)
+    @tile = Gosu::Image.new(@window,"media/ground_tile.png", true)
     @ground = make_ground(20)
+    @bg = Gosu::Image.new(@window, "media/city_background.png", true)
+    @x = 0
   end
 
   def make_ground(length)
@@ -23,7 +25,16 @@ class Level
     return ground
   end
 
+  def update(pan)
+    if pan == 1
+      @x = @x - 0.5
+    elsif pan == 0
+      @x = @x + 0.5
+    end
+  end
+
   def draw
+    @bg.draw(@x, -35, 0)
 
     @ground.each do |peice|
       peice.draw(@tile )
