@@ -69,6 +69,7 @@ class Player
   end
 
   def on_ground()
+    @in_air = true
     @window.level.ground.each do |peice|
       if collide?(peice)
         @y_vel = 0

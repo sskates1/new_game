@@ -18,6 +18,8 @@ class Level
     x += @tile.width*3
     ground << Ground.new(@window, x, y, @tile.width, @tile.height )
 
+    ground << Ground.new(@window, 50, 600, @tile.width, @tile.height)
+    ground << Ground.new(@window, 250, 600, @tile.width, @tile.height)
     return ground
   end
 
