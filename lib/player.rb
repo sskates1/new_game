@@ -29,26 +29,48 @@ class Player
 
   def move_left
     @direction = :left
-    if @x_vel <= -3
-      @x_vel = -3
-    else
-      @x_vel += -1
+    colide = false
+    @window.level.ground.each do |peice|
+      if horizontal_collide?(peice, @x_vel)
+        @x_vel = 0
+        @x = peice.hit_box.right+3.1
+        @hit_box.x = peice.hit_box.right+3.1
+        colide = true
+      end
     end
-    @x = @x+@x_vel
-    @hit_box.x = @x
+    if !colide
+      if @x_vel <= -3
+        @x_vel = -3
+      else
+        @x_vel += -1
+      end
+      @x = @x+@x_vel
+      @hit_box.x = @x
+    end
     @move += 0.2
     if @move > 8 then @move = 1 end
   end
 
   def move_right
     @direction = :right
-    if @x_vel <= +3
-      @x_vel = +3
-    else
-      @x_vel += +1
+    colide = false
+    @window.level.ground.each do |peice|
+      if horizontal_collide?(peice, @x_vel)
+        @x_vel = 0
+        @x = peice.hit_box.left - @width-3.1
+        @hit_box.x = peice.hit_box.left - @width-3.1
+        colide = true
+      end
     end
-    @x = @x+@x_vel
-    @hit_box.x = @x
+    if !colide
+      if @x_vel <= +3
+        @x_vel = +3
+      else
+        @x_vel += +1
+      end
+      @x = @x+@x_vel
+      @hit_box.x = @x
+    end
     @move += 0.2
     if @move > 8 then @move = 1 end
   end
@@ -69,14 +91,15 @@ class Player
   end
 
   def on_ground()
+    @in_air = true
     @window.level.ground.each do |peice|
-      if collide?(peice)
-        @y_vel = 0
+      if vertical_collide?(peice, @y_vel)
+        @y_vel = 1
         @in_air = false
         @double_jump = false
         @second_jump = false
-        @y = peice.hit_box.top - @height
-        @hit_box.y = peice.hit_box.top - @height
+        @y = peice.hit_box.top - @height - 1
+        @hit_box.y = peice.hit_box.top - @height - 1
       end
     end
 
@@ -89,15 +112,25 @@ class Player
 
       @y = @y+@y_vel
       @hit_box.y = @y
-    else
     end
   end
 
-  def collide?(peice)
-    if (((@hit_box.bottom >= peice.hit_box.top && @hit_box.bottom <= peice.hit_box.bottom ) ||
-        (@hit_box.top <= peice.hit_box.bottom && @hit_box.top >= peice.hit_box.top )) &&
+  def vertical_collide?(peice, y_vel)
+    if (((@hit_box.bottom + y_vel >= peice.hit_box.top && @hit_box.bottom + y_vel <= peice.hit_box.bottom ) ||
+        (@hit_box.top + y_vel <= peice.hit_box.bottom && @hit_box.top + y_vel >= peice.hit_box.top )) &&
         ((@hit_box.left < peice.hit_box.right && @hit_box.left > peice.hit_box.left) ||
         (@hit_box.right > peice.hit_box.left && @hit_box.right < peice.hit_box.right)))
+      return true
+    else
+      return false
+    end
+  end
+
+  def horizontal_collide?(peice, x_vel)
+    if (((@hit_box.bottom > peice.hit_box.top && @hit_box.bottom < peice.hit_box.bottom ) ||
+        (@hit_box.top < peice.hit_box.bottom && @hit_box.top > peice.hit_box.top )) &&
+        ((@hit_box.left + x_vel <= peice.hit_box.right && @hit_box.left + x_vel >= peice.hit_box.left) ||
+        (@hit_box.right + x_vel >= peice.hit_box.left && @hit_box.right+ x_vel <= peice.hit_box.right)))
       return true
     else
       return false
