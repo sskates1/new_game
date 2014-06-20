@@ -3,7 +3,7 @@ require_relative 'lib/Player'
 require_relative 'levels/twilight_skylight'
 require_relative 'lib/terrain/Ground'
 require_relative 'lib/support/bounding_box'
-#require_relative 'lib/Background'
+require_relative 'lib/Background'
 
 class Game <Gosu::Window
   attr_accessor :testing, :gravity, :level
@@ -29,7 +29,16 @@ class Game <Gosu::Window
       close
     end
     @player.update(self)
-
+    # if button_down?(Gosu::KbRight)
+    #   level.update(1)
+    # elsif button_down?(Gosu::KbLeft)
+    #   level.update(0)
+    # end
+    if button_down?(Gosu::KbRight)
+      level.update(1)
+    elsif button_down?(Gosu::KbLeft)
+      level.update(0)
+    end
   end
 
   def draw

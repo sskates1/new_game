@@ -23,8 +23,16 @@ class Level
     return ground
   end
 
+  def update(pan)
+    if pan == 1
+      @x = @x - 0.5
+    elsif pan == 0
+      @x = @x + 0.5
+    end
+  end
+
   def draw
-    @bg.draw(0, -35, 0)
+    @bg.draw(@x, -35, 0)
 
     @ground.each do |peice|
       peice.draw(@tile )
