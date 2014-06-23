@@ -127,11 +127,20 @@ class Player
   end
 
   def horizontal_collide?(peice, x_vel)
-    if (((@hit_box.bottom > peice.hit_box.top && @hit_box.bottom < peice.hit_box.bottom ) ||
-        (@hit_box.top < peice.hit_box.bottom && @hit_box.top > peice.hit_box.top )) &&
-        ((@hit_box.left + x_vel <= peice.hit_box.right && @hit_box.left + x_vel >= peice.hit_box.left) ||
-        (@hit_box.right + x_vel >= peice.hit_box.left && @hit_box.right+ x_vel <= peice.hit_box.right)))
-      return true
+    if x_vel > 0
+      if (((@hit_box.bottom > peice.hit_box.top && @hit_box.bottom < peice.hit_box.bottom ) ||
+          (@hit_box.top < peice.hit_box.bottom && @hit_box.top > peice.hit_box.top )) &&
+          ((@hit_box.left - 1 + x_vel < peice.hit_box.right && @hit_box.left - 1 + x_vel > peice.hit_box.left) ||
+          (@hit_box.right + x_vel > peice.hit_box.left && @hit_box.right+ x_vel < peice.hit_box.right)))
+        return true
+      end
+    elsif x_vel < 0
+      if (((@hit_box.bottom > peice.hit_box.top && @hit_box.bottom < peice.hit_box.bottom ) ||
+          (@hit_box.top < peice.hit_box.bottom && @hit_box.top > peice.hit_box.top )) &&
+          ((@hit_box.left + x_vel < peice.hit_box.right && @hit_box.left + x_vel > peice.hit_box.left) ||
+          (@hit_box.right + 1 + x_vel > peice.hit_box.left && @hit_box.right + 1 + x_vel < peice.hit_box.right)))
+        return true
+      end
     else
       return false
     end
