@@ -24,7 +24,7 @@ class Game <Gosu::Window
     #@background = Gosu::Image.new(self, "tiles/bg2.png", true)
 
     @testing = true
-    @gravity = 0.1
+    @gravity = 0.2
   end
 
   def update
