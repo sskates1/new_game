@@ -9,16 +9,16 @@ class Level
     @scroll_x = 0
   end
 
-  def make_ground(length, scroll)
+  def make_ground(length)
     ground = []
     #x = start location for each item
     x = 0
     y = 672
     10.times do #64 64
       ground << Ground.new(@window, x, y, @tile.width, @tile.height )
-      x += @tile.width + @scroll_x
+      x += @tile.width
     end
-    x += @tile.width*3 + @scroll_x
+    x += @tile.width*3
     ground << Ground.new(@window, x, y, @tile.width, @tile.height )
 
     ground << Ground.new(@window, 50, 600, @tile.width, @tile.height)

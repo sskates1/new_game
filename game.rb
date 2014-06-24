@@ -3,7 +3,6 @@ require_relative 'lib/Player'
 require_relative 'levels/twilight_skylight'
 require_relative 'lib/terrain/Ground'
 require_relative 'lib/support/bounding_box'
-require_relative 'lib/Background'
 
 class Game <Gosu::Window
   attr_accessor :testing, :gravity, :level
@@ -44,7 +43,6 @@ class Game <Gosu::Window
   end
 
   def draw_rect(x, y, width, height, color = 0xff0000ff, z = 10)
-    #binding.pry
     #left side
     draw_line(x,y,color,x, y+height, color, z)
     #right side
