@@ -8,6 +8,7 @@ class Player
     @window = window
     @stand = Gosu::Image.new(@window, "media/tifa_stand.png", true)
     @jump = Gosu::Image.new(@window, "media/tifa_walk/tifa_3.png", true)
+    @jump_jump = Gosu::Image.new(@window, "media/tifa_walk/tifa_5.png", true)
     @walk = []
     8.times do |i|
       @walk << Gosu::Image.new(@window, "media/tifa_walk/tifa_#{i+1}.png", true)
@@ -25,6 +26,7 @@ class Player
     @move = 1
     @double_jump = false
     @second_jump = false
+    @second_jump_animation = false
   end
 
   def move_left
@@ -88,6 +90,7 @@ class Player
     @hit_box.y = @y
     @double_jump = false
     @second_jump = false
+    @second_jump_animation = true
   end
 
   def on_ground()
@@ -98,6 +101,7 @@ class Player
         @in_air = false
         @double_jump = false
         @second_jump = false
+        @second_jump_animation = false
         @y = peice.hit_box.top - @height - 1
         @hit_box.y = peice.hit_box.top - @height - 1
       end
@@ -177,19 +181,25 @@ class Player
   end
 
   def draw
-    if @in_air == true && @direction == :left
-      @jump.draw(@x, @y, 1)
-    elsif @in_air == true && @direction == :right
-      @jump.draw(@x + @width, @y, 1, -1, 1)
+    if @second_jump_animation == true && @direction == :left && @in_air == true
+      @jump_jump.draw(@x, @y, 1)
+    elsif @second_jump_animation == true && @direction == :right && @in_air == true
+      @jump_jump.draw(@x + @width, @y, 1, -1, 1)
     else
-    	if @direction == :stand
-    		@stand.draw(@x, @y, 1)
-    	elsif @direction == :left
-        frame = ((@move - 1) / 1)
-        @walk[frame].draw(@x, @y, 1)
-      elsif @direction == :right
-        frame = ((@move - 1) / 1)
-        @walk[frame].draw(@x+@width, @y, 1, -1, 1)
+      if @in_air == true && @direction == :left
+        @jump.draw(@x, @y, 1)
+      elsif @in_air == true && @direction == :right
+        @jump.draw(@x + @width, @y, 1, -1, 1)
+      else
+      	if @direction == :stand
+      		@stand.draw(@x, @y, 1)
+      	elsif @direction == :left
+          frame = ((@move - 1) / 1)
+          @walk[frame].draw(@x, @y, 1)
+        elsif @direction == :right
+          frame = ((@move - 1) / 1)
+          @walk[frame].draw(@x+@width, @y, 1, -1, 1)
+        end
       end
     end
 
