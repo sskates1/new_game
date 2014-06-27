@@ -26,6 +26,4 @@ class Level
       end
     end
   end
-
-
 end

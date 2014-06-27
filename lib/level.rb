@@ -5,7 +5,7 @@ class Level
     @tile = tile
     @ground = ground
     @bg = bg
-    @x = 0
+    @x = -100
   end
 
   def update(pan)
@@ -26,6 +26,4 @@ class Level
       end
     end
   end
-
-
 end

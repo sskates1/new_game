@@ -13,6 +13,4 @@ class BoundingArea
     end
     false
   end
-
-
 end

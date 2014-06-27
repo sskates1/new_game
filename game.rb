@@ -59,7 +59,6 @@ class Game <Gosu::Window
     #   x + width, y + height, color,
     #   x, y + height, color, z)
   end
-
 end
 
 Game.new.show

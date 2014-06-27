@@ -32,5 +32,4 @@ class BoundingBox
       false
     end
   end
-
 end

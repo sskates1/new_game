@@ -12,5 +12,4 @@ class Ground
   def draw(tiles)
     tiles.draw(@x, @y, 1)
   end
-
 end
