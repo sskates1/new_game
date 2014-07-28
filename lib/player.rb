@@ -85,6 +85,7 @@ class Player
   end
 
   def double_jump
+    @y_vel = 0
     @y_vel += -4
     @y = @y+@y_vel
     @hit_box.y = @y
